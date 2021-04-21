@@ -3,20 +3,20 @@ package first_round;
 import com.jspiders.models.User;
 
 public class Model_object_layer extends Object implements Comparable<Model_object_layer> {
-		private int id;
-		private int emp_id;
-		private String first_name;
-		private String last_name;
-		private String start_date;
-		private String end_date;
-		private String role;
-		private String dept;
-		private String status;
-		private String dob;
-		private String rep_mgr;
-		private String gender;
-		private String blood_grp;
-		private String address;
+		private int id;            //NO INSERTION
+		private int emp_id;       //NO INSERTION
+		private String first_name;  //1
+		private String last_name;   //2
+		private String start_date;  //3
+		private String end_date;    //4
+		private String role;        //5
+		private String dept;		//6
+		private String status;		//7
+		private String dob;			//8
+		private String rep_mgr;		//9
+		private String gender;		//10
+		private String blood_grp;	//11
+		private String address;		//12
 		
 		public Model_object_layer()
 		{
