@@ -1,5 +1,7 @@
 package first_round;
 
+import com.jspiders.models.User;
+
 public class Model_object_layer extends Object implements Comparable<Model_object_layer> {
 		private int id;
 		private int emp_id;
@@ -127,12 +129,18 @@ public class Model_object_layer extends Object implements Comparable<Model_objec
 			Model_object_layer m1=(Model_object_layer)obj;  //Downcasting
 			Integer emp_id=m1.getEmp_id(); //stored in DB
 			Integer emp_id1=this.emp_id;  //passed from Front End
-			boolean b1=emp_id.equals(emp_id1);
+			boolean b1=emp_id.equals(emp_id1);   //Comparision purpose during login and getting a user through emp_id
 			return b1;
 		}
+		@Override
+		public int compareTo(Model_object_layer mod_obj) //data flowing from front end
+		{
+		Model_object_layer u1 = mod_obj;
 		
+		String e1 = u1.getFirst_name();
+		String e2 = this.first_name;
 		
-		
-	
+		int res = e1.compareTo(e2);   //Data will be sorted according to alphabetical order when retrieved from TreeSet
+		return res;
 	}
 }
