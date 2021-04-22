@@ -1,4 +1,4 @@
-package first_round;
+package emp_DAO_Layer;
 
 
 	import java.io.IOException;
@@ -6,7 +6,7 @@ package first_round;
 	//import java.util.List;
 	import java.util.Set;
 
-	import first_round.Model_object_layer;
+	import emp_Model.Model_object_layer;
 
 	public interface MyDAO_API_crud_layer {
 		
@@ -14,13 +14,17 @@ package first_round;
 	   
 	   public int insert(Model_object_layer mol)throws SQLException; //CREATE
 	   
-	   public Model_object_layer getEmpByemp_id(String emp_id)throws SQLException;  //READ
+	   public Model_object_layer getEmpByemp_id(int emp_id)throws SQLException;  //READ
 	   
 	   public Set<Model_object_layer> getAllEmployeesSortByfirst_name() throws SQLException;  //READ ALL
 	   
-	   public int update(Model_object_layer mol)throws SQLException;  //UPDATE
+	   public int update(int emp_id, String start_date, String end_date, String role, String dept, String status,
+				String rep_mgr, String address) throws SQLException; //UPDATE
 	
-	   public int deleteByemp_id(Model_object_layer first_name)throws SQLException;  //DELETE
+	   public int deleteByemp_id(int emp_id) throws SQLException;  //DELETE
+	   
+	   public int deleteAll() throws SQLException;//DELETE ALL
 	   
 	   public void closeDB()throws SQLException;  //CLOSE
+
 	}
