@@ -19,11 +19,13 @@ public class Model_object_layer extends Object implements Comparable<Model_objec
 		{
 			
 		}
-		public Model_object_layer(String first_name, String last_name, String start_date, String end_date, String role,
+		public Model_object_layer(int id,int emp_id,String first_name, String last_name, String start_date, String end_date, String role,
 				String dept, String status, String dob, String rep_mgr, String gender, String blood_grp,
 				String address) //for accessing Model storage instantaneously
 		{
 			super();
+			this.id=id;
+			this.emp_id=emp_id;
 			this.first_name = first_name;
 			this.last_name = last_name;
 			this.start_date = start_date;
@@ -37,8 +39,15 @@ public class Model_object_layer extends Object implements Comparable<Model_objec
 			this.blood_grp = blood_grp;
 			this.address = address;
 		}
+		public void setId(int id)
+		{
+			this.id=id;
+		}
 		public int getId() {
 			return id;
+		}
+		public void setEmp_id(int emp_id){
+			this.emp_id=emp_id;
 		}
 		public int getEmp_id() {
 			return emp_id;
@@ -137,7 +146,7 @@ public class Model_object_layer extends Object implements Comparable<Model_objec
 		String e1 = u1.getFirst_name();
 		String e2 = this.first_name;
 		
-		int res = e1.compareTo(e2);   //Data will be sorted according to alphabetical order when retrieved from TreeSet
+		int res = e2.compareTo(e1);   //Data will be sorted according to alphabetical order when retrieved from TreeSet
 		return res;
 	}
 }

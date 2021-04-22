@@ -3,7 +3,8 @@ package emp_DAO_Layer;
 
 	import java.io.IOException;
 	import java.sql.SQLException;
-	//import java.util.List;
+import java.util.List;
+//import java.util.List;
 	import java.util.Set;
 
 	import emp_Model.Model_object_layer;
@@ -16,7 +17,7 @@ package emp_DAO_Layer;
 	   
 	   public Model_object_layer getEmpByemp_id(int emp_id)throws SQLException;  //READ
 	   
-	   public Set<Model_object_layer> getAllEmployeesSortByfirst_name() throws SQLException;  //READ ALL
+	   public List<Model_object_layer> getAllEmployeesSortByfirst_name() throws SQLException;  //READ ALL
 	   
 	   public int update(int emp_id, String start_date, String end_date, String role, String dept, String status,
 				String rep_mgr, String address) throws SQLException; //UPDATE

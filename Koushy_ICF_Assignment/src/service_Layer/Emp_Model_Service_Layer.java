@@ -3,9 +3,11 @@ package service_Layer;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
 //import java.util.List;
 import java.util.Set;
-
 import emp_DAO_Layer.MySQL_layer;
 import emp_Model.Model_object_layer;
 
@@ -47,13 +49,12 @@ public class Emp_Model_Service_Layer {
 			String dept,String status,String rep_mgr,String address) throws SQLException,IOException
 	{
 		ms.initDB();
-		int count = ms.update(emp_id,start_date, end_date,role,
-        		dept,status,rep_mgr,address);
+		int count = ms.update(emp_id,start_date, end_date,role,dept,status,rep_mgr,address);
 		
 		if(count > 0)
-			System.out.println("Employee Profile updated with Employee_id"+emp_id);
+			System.out.println("Employee Profile updated with Employee_id :"+emp_id);
 		else
-			System.out.println("Error while updating Employee Profile with Employee_id"+emp_id);
+			System.out.println("Error while updating Employee Profile with Employee_id :"+emp_id);
 		ms.closeDB();
 	}
 	public void deleteEmpProfileByemp_id(int entEmp_id) throws SQLException,IOException
@@ -70,28 +71,30 @@ public class Emp_Model_Service_Layer {
 	public void deleteEntiremp_Details() throws SQLException,IOException
 	{
          ms.initDB();
-		int count = ms.deleteAll();
-		if(count > 0)
-			System.out.println("All Employee Profiles DELETED");
-		else
-			System.out.println("Error while deleting Employee Details");
+		int cnt=ms.deleteAll();
 		ms.closeDB();
 	  }
 	public void showAllEmpDetails() throws SQLException,IOException
 	{
+	   /* ms.initDB();
+	    LinkedList<Model_object_layer> listSet=(LinkedList<Model_object_layer>) ms.getAllEmployeesSortByfirst_name();
+	    listSet.forEach(Employees -> System.out.println(Employees));
+		ms.closeDB();*/
 	    ms.initDB();
-	    Set<Model_object_layer> mol  = ms.getAllEmployeesSortByfirst_name();
-	    mol.forEach(Employees -> System.out.println(Employees));
+		
+		List<Model_object_layer> mol  = ms.getAllEmployeesSortByfirst_name();
+		mol.forEach(emp -> System.out.println(emp));
+	
 		ms.closeDB();
 	}
 	public void search_emp(int emp_id) throws SQLException, IOException
 	{
-		HashMap<Integer,Model_object_layer>  empTable= ms.getEmpTable();
+		HashMap<String,Model_object_layer>  empTable= ms.getEmpTable();
 		Model_object_layer mol = empTable.get(emp_id);
 		if(mol!=null)
 		{
 	     System.out.println("Employee found from Result Cache Table");   ///Caching
-		 //System.out.println(mol);		 
+		 System.out.println(mol);		 
 		}
 		else
 		{
@@ -101,7 +104,6 @@ public class Emp_Model_Service_Layer {
 			 if(mol1!=null)
 			 {
 			 System.out.println("Employee found from DB");
-			// System.out.println(mol1);
 			 }
 			 else
 				 System.out.println("Employee not found");

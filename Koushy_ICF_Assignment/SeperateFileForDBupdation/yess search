@@ -1,0 +1,16 @@
+/*Emp_Model_Service_Layer ems1 = new Emp_Model_Service_Layer(); 
+			try 
+			{
+				ems1.showAllEmpDetails();
+				Scanner sc1 = new Scanner(System.in);
+				while(true) {
+				System.out.println("Enter emaployee id for search");
+				
+				ems1.search_emp(sc1.nextInt());
+				}
+			} 
+			catch (Exception e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/

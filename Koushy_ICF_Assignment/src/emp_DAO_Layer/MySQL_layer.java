@@ -27,19 +27,18 @@ public class MySQL_layer implements MyDAO_API_crud_layer {
 	private PreparedStatement pms;
 	private Connection con;
 
-	private String insertEmp = "insert into usersdb.icfdb values(?,?,?,?,?,?,?,?,?,?,?,?)";  //CREATE
+	private String insertEmp = "insert into usersdb.icfdb values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";  //CREATE
 	private String getEmpInfo = "select * from usersdb.icfdb where emp_id = ?";              //READ
 	private String getAllEmpInfo = "select * from usersdb.icfdb";                          //READ ALL
-	private String editEmpDetailsByfirst_name="update usersdb.icfdb set start_date=?,"
-			+ "end_date=?,role=?,dept=?,status=?,rep_mgr=?,address=? where first_name=?";       //UPDATE
+	private String editEmpDetailsByemp_id="update usersdb.icfdb set start_date=?,end_date=?,role=?,dept=?,status=?,rep_mgr=?,address=? where emp_id=?";       //UPDATE
 	
 	private String deleteEmpDetailsByemp_id = "delete from usersdb.icfdb where emp_id = ?";     //DELETE
 	private String deleteAllEmpDetails="truncate table usersdb.icfdb";                         //DELETE ALL
 	
-	private HashMap<Integer,Model_object_layer> empTable = new HashMap<Integer,Model_object_layer>();
+	private HashMap<String,Model_object_layer> empTable = new HashMap<String,Model_object_layer>();
 	
 	
-	public HashMap<Integer,Model_object_layer> getEmpTable()
+	public HashMap<String,Model_object_layer> getEmpTable()
 	{
 		return empTable;
 	}
@@ -47,18 +46,18 @@ public class MySQL_layer implements MyDAO_API_crud_layer {
 	@Override
 	public void initDB() throws SQLException, IOException {
 		
-		Properties dbProps = new Properties();
+		Properties dbProps1 = new Properties();
 		
-		String path = "/Users/koushik/git/Koushik_ICF_Assignment/DBConfigPropertiesFile";
+		String path1 = "/Users/koushik/git/Koushik_ICF_Assignment/Koushy_ICF_Assignment/DBConfigPropertiesFile";
 		
-		FileInputStream fis = new FileInputStream(path);
+		FileInputStream fis1 = new FileInputStream(path1);
 		
-		dbProps.load(fis);
+		dbProps1.load(fis1);
 		
-		url = dbProps.getProperty("url","");
-		dbname = dbProps.getProperty("dbname","");
-		dbusername = dbProps.getProperty("dbusername","");
-		dbuserpwd = dbProps.getProperty("dbuserpwd","");
+		url = dbProps1.getProperty("url","");
+		dbname = dbProps1.getProperty("dbname","");
+		dbusername = dbProps1.getProperty("dbusername","");
+		dbuserpwd = dbProps1.getProperty("dbuserpwd","");
 		
 		con = DriverManager.getConnection(url + dbname, dbusername, dbuserpwd);
 		stmt = con.createStatement();
@@ -66,9 +65,8 @@ public class MySQL_layer implements MyDAO_API_crud_layer {
 	@Override
 	public int insert(Model_object_layer mol) throws SQLException {
 		pms = con.prepareStatement(insertEmp);
-		int i=1;
-		pms.setInt(1, i++);
-		pms.setInt(2,1251);
+		pms.setInt(1, mol.getId());
+		pms.setInt(2, mol.getEmp_id());
 		pms.setString(3,  mol.getFirst_name());
 		pms.setString(4,  mol.getLast_name());
 		pms.setString(5,  mol.getStart_date());
@@ -90,13 +88,15 @@ public class MySQL_layer implements MyDAO_API_crud_layer {
 	public Model_object_layer getEmpByemp_id(int emp_id) throws SQLException {
 		
 		pms = con.prepareStatement(getEmpInfo);
-		pms.setInt(2, emp_id);
+		pms.setInt(1, emp_id);
 
 		ResultSet rs = pms.executeQuery();
 		rs.next();
 
 		Model_object_layer mol1 = new Model_object_layer();
-	
+		
+		mol1.setId(rs.getInt(1));
+		mol1.setEmp_id(rs.getInt(2));
 		mol1.setFirst_name(rs.getString(3));
 		mol1.setLast_name(rs.getString(4));
 		mol1.setStart_date(rs.getString(5));
@@ -113,19 +113,20 @@ public class MySQL_layer implements MyDAO_API_crud_layer {
 		return mol1;
 	}
 	@Override
-	public Set<Model_object_layer> getAllEmployeesSortByfirst_name() throws SQLException {
+	public List<Model_object_layer> getAllEmployeesSortByfirst_name() throws SQLException {
 		
 			pms = con.prepareStatement(getAllEmpInfo);
 
 			ResultSet rs = pms.executeQuery();
 			
-			Set<Model_object_layer> empSet = new TreeSet<Model_object_layer>();
+			LinkedList<Model_object_layer> listSet = new LinkedList<Model_object_layer>();
 
 			while (rs.next()) 
 			{
 				int columnIndex = 3;
 
 				Model_object_layer mol2 = new Model_object_layer();
+				
 				mol2.setFirst_name(rs.getString(columnIndex++));  //3
 				mol2.setLast_name(rs.getString(columnIndex++)); //4
 				mol2.setStart_date(rs.getString(columnIndex++));  //5
@@ -138,15 +139,16 @@ public class MySQL_layer implements MyDAO_API_crud_layer {
 				mol2.setGender(rs.getString(columnIndex++));  //12
 				mol2.setBlood_grp(rs.getString(columnIndex++)); //13
 				mol2.setAddress(rs.getString(columnIndex++)); //14
-				empSet.add(mol2);
-
+				
+				listSet.add(mol2);
+				empTable.put(rs.getString("first_name"),mol2);
 			}
 
-			return empSet;
+			return listSet;
 		}
 	@Override
 	public int update(int emp_id,String start_date,String end_date,String role,String dept,String status,String rep_mgr,String address) throws SQLException {
-			pms = con.prepareStatement(editEmpDetailsByfirst_name);
+			pms = con.prepareStatement(editEmpDetailsByemp_id);
 			pms.setInt(8,emp_id);
 			pms.setString(1,start_date);
 			pms.setString(2,end_date);
@@ -167,7 +169,7 @@ public class MySQL_layer implements MyDAO_API_crud_layer {
 	}
 	@Override
 	public int deleteAll() throws SQLException {
-		pms = con.prepareStatement(deleteEmpDetailsByemp_id);
+		pms = con.prepareStatement(deleteAllEmpDetails);
 		int count  = pms.executeUpdate();
 		return count;
 	}
