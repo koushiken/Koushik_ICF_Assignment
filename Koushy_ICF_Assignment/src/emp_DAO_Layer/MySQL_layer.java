@@ -35,6 +35,7 @@ public class MySQL_layer implements MyDAO_API_crud_layer {
 	
 	private String deleteEmpDetailsByemp_id = "delete from usersdb.icfdb where emp_id = ?";     //DELETE
 	private String deleteAllEmpDetails="truncate table usersdb.icfdb";                         //DELETE ALL
+	
 	private HashMap<Integer,Model_object_layer> empTable = new HashMap<Integer,Model_object_layer>();
 	
 	
@@ -86,10 +87,10 @@ public class MySQL_layer implements MyDAO_API_crud_layer {
 		return count; //returns a countable value>0 if insertion done.
 	}
 	@Override
-	public Model_object_layer getEmpByemp_id(String emp_id) throws SQLException {
+	public Model_object_layer getEmpByemp_id(int emp_id) throws SQLException {
 		
 		pms = con.prepareStatement(getEmpInfo);
-		pms.setString(2, emp_id);
+		pms.setInt(2, emp_id);
 
 		ResultSet rs = pms.executeQuery();
 		rs.next();
@@ -144,9 +145,9 @@ public class MySQL_layer implements MyDAO_API_crud_layer {
 			return empSet;
 		}
 	@Override
-	public int update(String first_name,String start_date,String end_date,String role,String dept,String status,String rep_mgr,String address) throws SQLException {
+	public int update(int emp_id,String start_date,String end_date,String role,String dept,String status,String rep_mgr,String address) throws SQLException {
 			pms = con.prepareStatement(editEmpDetailsByfirst_name);
-			pms.setString(8,first_name);
+			pms.setInt(8,emp_id);
 			pms.setString(1,start_date);
 			pms.setString(2,end_date);
 			pms.setString(3,role);

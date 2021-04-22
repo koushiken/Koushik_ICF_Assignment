@@ -1,7 +1,4 @@
-package first_round;
-
-import com.jspiders.models.User;
-
+package emp_Model;
 public class Model_object_layer extends Object implements Comparable<Model_object_layer> {
 		private int id;            //NO INSERTION
 		private int emp_id;       //NO INSERTION
