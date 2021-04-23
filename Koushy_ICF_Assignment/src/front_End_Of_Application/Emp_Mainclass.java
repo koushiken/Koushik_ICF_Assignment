@@ -1,9 +1,6 @@
 package front_End_Of_Application;
 
 import java.util.Scanner;
-
-
-
 import emp_Model.Model_object_layer;
 import service_Layer.Emp_Model_Service_Layer;
 
@@ -93,10 +90,11 @@ public class Emp_Mainclass
 					break;
 		
 		  case "4": ems.showAllEmpDetails();
-		  case "3":	
-			  		System.out.println("Enter the Employee ID to Update");
+		  			break;
+		  
+		  case "3":	System.out.println("Enter the Employee ID to Update");
 			  		int emp_id=sc.nextInt();
-			  		ems.search_emp(emp_id);
+			  		ems.search_emp_byId(emp_id);
 			  		System.out.println("Enter New Date of Joining");
 			  		String start_date=sc.next();
 				    System.out.println("Enter New Date of exit");
@@ -138,7 +136,7 @@ public static void loadDummyData(int p)
 		try
 		{
 		  int id=j++;  //No Auto-increment, not-null
-		  int emp_id=k++; //Auto-increment, unique, not null
+		  int emp_id=k++; //No Auto-increment, unique, not null
 		  String fname = "user"+i; //1
 		  String lname = "Neegros"+i;  //2
 		  String start_date = "1"+i+"/04/2021"; //3
@@ -177,12 +175,15 @@ public static void loadDummyData(int p)
 		}
 		}
 	}
-		public static void main(String[] args) throws Exception
-		{
-			//loadDummyData(1);
-			
-			showMenu();
-			
+		public static void main(String[] args) throws Exception{
+			try {
+				loadDummyData(1);
+				showMenu();
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
 		
 		}
 		

@@ -126,17 +126,23 @@ public class Model_object_layer extends Object implements Comparable<Model_objec
 			this.address = address;
 		}
 		@Override
-		public int hashCode() {
-			
-			return id;
+		public int hashCode()
+		{
+			return emp_id;
+		}
+		@Override
+		public String toString() {
+			return "Employee [ "+emp_id+" : "+first_name+" : "+last_name+" : "+start_date+" : "+end_date
+					+" : "+role+" : "+dept+" : "+status+" : "+dob+" : "+rep_mgr+" : "+gender+" : "+gender+" : "+blood_grp+" : "+address+ "]";
+				 
 		}
 		@Override
 		public boolean equals(Object obj) {
 			Model_object_layer m1=(Model_object_layer)obj;  //Downcasting
 			Integer emp_id=m1.getEmp_id(); //stored in DB
 			Integer emp_id1=this.emp_id;  //passed from Front End
-			boolean b1=emp_id.equals(emp_id1);   //Comparision purpose during login and getting a user through emp_id
-			return b1;
+			boolean b1=emp_id.equals(emp_id1);   //Comparision purpose during login and checking whether  user emp_id already exists or not
+			return b1;  //if true input data will be treated as duplicate and discarded
 		}
 		@Override
 		public int compareTo(Model_object_layer mod_obj) //data flowing from front end
@@ -147,6 +153,6 @@ public class Model_object_layer extends Object implements Comparable<Model_objec
 		String e2 = this.first_name;
 		
 		int res = e2.compareTo(e1);   //Data will be sorted according to alphabetical order when retrieved from TreeSet
-		return res;
+		return res;  //for storing in to tree set ,and retrieve in some order with repect to length or alphabetical order
 	}
 }

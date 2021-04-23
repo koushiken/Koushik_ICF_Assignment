@@ -3,11 +3,11 @@ package service_Layer;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
+//import java.util.LinkedHashSet;
+//import java.util.LinkedList;
 //import java.util.List;
-import java.util.Set;
+//import java.util.List;
+//import java.util.Set;
 import emp_DAO_Layer.MySQL_layer;
 import emp_Model.Model_object_layer;
 
@@ -71,30 +71,25 @@ public class Emp_Model_Service_Layer {
 	public void deleteEntiremp_Details() throws SQLException,IOException
 	{
          ms.initDB();
-		int cnt=ms.deleteAll();
+		ms.deleteAll();
 		ms.closeDB();
 	  }
 	public void showAllEmpDetails() throws SQLException,IOException
 	{
-	   /* ms.initDB();
-	    LinkedList<Model_object_layer> listSet=(LinkedList<Model_object_layer>) ms.getAllEmployeesSortByfirst_name();
-	    listSet.forEach(Employees -> System.out.println(Employees));
-		ms.closeDB();*/
 	    ms.initDB();
 		
-		List<Model_object_layer> mol  = ms.getAllEmployeesSortByfirst_name();
-		mol.forEach(emp -> System.out.println(emp));
-	
+	    ms.getAllEmployeeSortby_first_name().forEach(mol1->System.out.println(mol1));
+
 		ms.closeDB();
 	}
-	public void search_emp(int emp_id) throws SQLException, IOException
+	public void search_emp_byId(int emp_id) throws SQLException, IOException
 	{
-		HashMap<String,Model_object_layer>  empTable= ms.getEmpTable();
-		Model_object_layer mol = empTable.get(emp_id);
-		if(mol!=null)
+		HashMap<Integer,Model_object_layer>  empTable= ms.getEmpTable();
+		Model_object_layer mol2 = empTable.get(emp_id);
+		if(mol2!=null)
 		{
 	     System.out.println("Employee found from Result Cache Table");   ///Caching
-		 System.out.println(mol);		 
+		 System.out.println(mol2);		 
 		}
 		else
 		{
@@ -104,6 +99,7 @@ public class Emp_Model_Service_Layer {
 			 if(mol1!=null)
 			 {
 			 System.out.println("Employee found from DB");
+			 System.out.println(mol1);
 			 }
 			 else
 				 System.out.println("Employee not found");

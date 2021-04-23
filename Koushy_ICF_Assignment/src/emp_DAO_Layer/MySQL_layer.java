@@ -9,8 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+//import java.util.LinkedList;
+//import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
@@ -35,10 +35,10 @@ public class MySQL_layer implements MyDAO_API_crud_layer {
 	private String deleteEmpDetailsByemp_id = "delete from usersdb.icfdb where emp_id = ?";     //DELETE
 	private String deleteAllEmpDetails="truncate table usersdb.icfdb";                         //DELETE ALL
 	
-	private HashMap<String,Model_object_layer> empTable = new HashMap<String,Model_object_layer>();
+	private HashMap<Integer,Model_object_layer> empTable = new HashMap<Integer,Model_object_layer>();
 	
 	
-	public HashMap<String,Model_object_layer> getEmpTable()
+	public HashMap<Integer,Model_object_layer> getEmpTable()
 	{
 		return empTable;
 	}
@@ -113,38 +113,33 @@ public class MySQL_layer implements MyDAO_API_crud_layer {
 		return mol1;
 	}
 	@Override
-	public List<Model_object_layer> getAllEmployeesSortByfirst_name() throws SQLException {
-		
-			pms = con.prepareStatement(getAllEmpInfo);
-
-			ResultSet rs = pms.executeQuery();
-			
-			LinkedList<Model_object_layer> listSet = new LinkedList<Model_object_layer>();
-
+	public Set<Model_object_layer> getAllEmployeeSortby_first_name() throws SQLException {
+			pms=con.prepareStatement(getAllEmpInfo);
+			ResultSet rs=pms.executeQuery();
+			Set<Model_object_layer> mol_set=new TreeSet<Model_object_layer>();
 			while (rs.next()) 
 			{
-				int columnIndex = 3;
+				int columnIndex = 1;
 
-				Model_object_layer mol2 = new Model_object_layer();
+				Model_object_layer mol = new Model_object_layer();
 				
-				mol2.setFirst_name(rs.getString(columnIndex++));  //3
-				mol2.setLast_name(rs.getString(columnIndex++)); //4
-				mol2.setStart_date(rs.getString(columnIndex++));  //5
-				mol2.setEnd_date(rs.getString(columnIndex++));  //6
-				mol2.setRole(rs.getString(columnIndex++)); //7
-				mol2.setDept(rs.getString(columnIndex++)); //8
-				mol2.setStatus(rs.getString(columnIndex++)); //9
-				mol2.setDob(rs.getString(columnIndex++)); //10
-				mol2.setRep_mgr(rs.getString(columnIndex++)); //11
-				mol2.setGender(rs.getString(columnIndex++));  //12
-				mol2.setBlood_grp(rs.getString(columnIndex++)); //13
-				mol2.setAddress(rs.getString(columnIndex++)); //14
-				
-				listSet.add(mol2);
-				empTable.put(rs.getString("first_name"),mol2);
+				mol.setId(rs.getInt(columnIndex));
+				mol.setEmp_id(rs.getInt(columnIndex++));
+				mol.setFirst_name(rs.getString(columnIndex++));  //3
+				mol.setLast_name(rs.getString(columnIndex++)); //4
+				mol.setStart_date(rs.getString(columnIndex++));  //5
+				mol.setEnd_date(rs.getString(columnIndex++));  //6
+				mol.setRole(rs.getString(columnIndex++)); //7
+				mol.setDept(rs.getString(columnIndex++)); //8
+				mol.setStatus(rs.getString(columnIndex++)); //9
+				mol.setDob(rs.getString(columnIndex++)); //10
+				mol.setRep_mgr(rs.getString(columnIndex++)); //11
+				mol.setGender(rs.getString(columnIndex++));  //12
+				mol.setBlood_grp(rs.getString(columnIndex++)); //13
+				mol.setAddress(rs.getString(columnIndex++)); //14
+				mol_set.add(mol);
 			}
-
-			return listSet;
+			return mol_set;
 		}
 	@Override
 	public int update(int emp_id,String start_date,String end_date,String role,String dept,String status,String rep_mgr,String address) throws SQLException {
@@ -168,10 +163,9 @@ public class MySQL_layer implements MyDAO_API_crud_layer {
 		return count;
 	}
 	@Override
-	public int deleteAll() throws SQLException {
+	public void deleteAll() throws SQLException {
 		pms = con.prepareStatement(deleteAllEmpDetails);
-		int count  = pms.executeUpdate();
-		return count;
+		pms.executeUpdate();
 	}
 	@Override
 	public void closeDB() throws SQLException {
