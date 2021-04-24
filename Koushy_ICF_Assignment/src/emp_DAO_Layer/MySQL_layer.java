@@ -64,6 +64,7 @@ public class MySQL_layer implements MyDAO_API_crud_layer {
 	}
 	@Override
 	public int insert(Model_object_layer mol) throws SQLException {
+		
 		pms = con.prepareStatement(insertEmp);
 		pms.setInt(1, mol.getId());
 		pms.setInt(2, mol.getEmp_id());
@@ -81,7 +82,7 @@ public class MySQL_layer implements MyDAO_API_crud_layer {
 		pms.setString(14, mol.getAddress());
 		
 		int count = pms.executeUpdate();
-
+		
 		return count; //returns a countable value>0 if insertion done.
 	}
 	@Override

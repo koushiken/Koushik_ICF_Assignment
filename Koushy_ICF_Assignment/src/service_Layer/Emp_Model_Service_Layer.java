@@ -17,6 +17,7 @@ public class Emp_Model_Service_Layer {
 	
 	public void loginByAdmin(Integer entEmp_id) throws SQLException, IOException
 	{
+		
 		 /*Step1 : getEMpByEmp_id(emp_id) --> 
 		Step2 : get emp_id from the ResultSet(DataBase)
 		Step3 : compare entEmp_id with employee id
@@ -24,8 +25,8 @@ public class Emp_Model_Service_Layer {
 		          ->not match -> invalid id
 		*/
 		ms.initDB();
+	
 		Model_object_layer mol  = ms.getEmpByemp_id(entEmp_id);
-		
 		Integer dbempid = mol.getEmp_id();
 		
 		if(entEmp_id.equals(dbempid))
@@ -35,14 +36,15 @@ public class Emp_Model_Service_Layer {
 		ms.closeDB();
 	}
 	public void create_NewEmp(Model_object_layer mol1) throws SQLException, IOException
-	{
+	{	
+		
 		ms.initDB();
 		int count = ms.insert(mol1);
 		
 		if(count > 0)
 			System.out.println("Employee Profile Created");
 		else
-			System.out.println("Error whil Creating Employee Profile");
+			System.out.println("Error while Creating Employee Profile");
 		ms.closeDB();
 	}
 	public void editEmpProfileByemp_id(int emp_id,String start_date,String end_date,String role,
@@ -88,7 +90,7 @@ public class Emp_Model_Service_Layer {
 		Model_object_layer mol2 = empTable.get(emp_id);
 		if(mol2!=null)
 		{
-	     System.out.println("Employee found from Result Cache Table");   ///Caching
+	     System.out.println("Employee found from Resultant Cache Table");   ///Caching //Hash Set
 		 System.out.println(mol2);		 
 		}
 		else

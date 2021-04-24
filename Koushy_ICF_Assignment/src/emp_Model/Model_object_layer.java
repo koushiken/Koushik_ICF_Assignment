@@ -141,7 +141,7 @@ public class Model_object_layer extends Object implements Comparable<Model_objec
 			Model_object_layer m1=(Model_object_layer)obj;  //Downcasting
 			Integer emp_id=m1.getEmp_id(); //stored in DB
 			Integer emp_id1=this.emp_id;  //passed from Front End
-			boolean b1=emp_id.equals(emp_id1);   //Comparision purpose during login and checking whether  user emp_id already exists or not
+			boolean b1=emp_id1.equals(emp_id);   //Comparision purpose during login and checking whether  user emp_id already exists or not
 			return b1;  //if true input data will be treated as duplicate and discarded
 		}
 		@Override

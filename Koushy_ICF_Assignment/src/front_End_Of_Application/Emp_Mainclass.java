@@ -8,6 +8,7 @@ public class Emp_Mainclass
 {
 	public static void showMenu()
 	{
+		 int q=6;
 		 Emp_Model_Service_Layer ems = new Emp_Model_Service_Layer();  //CREATE OBJECT OF SERVICE LAYER
 
 		Scanner sc = new Scanner(System.in);
@@ -37,6 +38,7 @@ public class Emp_Mainclass
 		  switch(choice)
 		  {
 		  case "1" :Model_object_layer mol1= new Model_object_layer();
+			  		mol1.setId(++q);
 			        System.out.println("Enter First Name"); //1
 			        mol1.setFirst_name(sc.next());
 			        
@@ -73,7 +75,6 @@ public class Emp_Mainclass
 			        System.out.println("Enter Employee Address");    //12
 			        mol1.setAddress(sc.next());
 			        ems.create_NewEmp(mol1);
-			     
 			        break;	
 		  
 		  case "2": System.out.println("Enter Employee Id to login");
@@ -86,13 +87,15 @@ public class Emp_Mainclass
 					
 					
 		  case "6":	ems.deleteEntiremp_Details();
-					System.out.println("All Employee Profiles DELETED");
+					System.out.println("All Employee Details DELETED");
 					break;
 		
 		  case "4": ems.showAllEmpDetails();
 		  			break;
-		  
-		  case "3":	System.out.println("Enter the Employee ID to Update");
+		  			
+		  		
+		  case "3":
+			  		System.out.println("Enter the Employee ID to Update");
 			  		int emp_id=sc.nextInt();
 			  		ems.search_emp_byId(emp_id);
 			  		System.out.println("Enter New Date of Joining");
@@ -109,11 +112,11 @@ public class Emp_Mainclass
 				    String rep_mgr=sc.next();
 				    System.out.println("Enter New Employee Address");
 				    String address=sc.next();
-				    
 				    ems.editEmpProfileByemp_id(emp_id,start_date,end_date,role,dept,status,rep_mgr,address);
 				    break;
+				    
 		  default :System.out.println("Admin logged Out"); 
-	      System.exit(0); 
+	      		   System.exit(0); 
 }	
 		
 }
@@ -126,17 +129,17 @@ public class Emp_Mainclass
 	
 public static void loadDummyData(int p)
 	{
+		int j=0,k=1521;
+	
 		Emp_Model_Service_Layer ems = new Emp_Model_Service_Layer();
 		
-		int n=6,j=1,k=1523;
 		Model_object_layer mol = new Model_object_layer();
 		
-		for(int i=1; i<=n; i++)
+		for(int i=1; i<=6; i++)
 		{
 		try
-		{
-		  int id=j++;  //No Auto-increment, not-null
-		  int emp_id=k++; //No Auto-increment, unique, not null
+		{ int id = ++j;
+		  int emp_id= k++;
 		  String fname = "user"+i; //1
 		  String lname = "Neegros"+i;  //2
 		  String start_date = "1"+i+"/04/2021"; //3
