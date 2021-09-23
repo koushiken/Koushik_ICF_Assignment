@@ -1,0 +1,55 @@
+class MainclassThread
+{
+public static void main(String[] args)
+{
+
+Runnable r1 = () ->
+{
+for(int i=1;i<3;i++)
+{
+system.out.println("task one executing independently");
+}
+}
+
+Runnable r2 = () ->
+{
+for(int i=1;i<3;i++)
+{
+system.out.println("task two executing independently");
+}
+}
+
+Thread t1=new Thread(r1);
+Thread t2=new Thread(r2);
+t1.start();
+t2.start();
+}
+}
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Lambda function can be passed as a return value
+
+package com.bermuda.module;
+interface Run3
+{
+public int add(int a, int b, int c);
+}
+
+public class Mainclass{
+public static int findAvg(Run3 r1)
+{
+int sum=r1.add(2,3,4);
+int avg=sum/3;
+return avg;
+}
+public static void main(String[] args)
+{
+Run3 ref=(int a, int b, int c) -> 
+{
+return a+b+c;
+};
+int res=findAvg(ref);
+system.out.println(res);
+}
+}
